@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:wakelock/wakelock.dart';
+
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Wakelock.enable();
     return MaterialApp(
       title: 'Bingo Score',
       theme: ThemeData(
@@ -29,9 +33,11 @@ class MyApp extends StatelessWidget {
           ),
           body: Scores()
       )
-
     );
   }
+
+
+
 }
 
 class ScoresState extends State<Scores> {
@@ -41,6 +47,7 @@ class ScoresState extends State<Scores> {
   final _redBiggerFont = const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Colors.red);
   final _bolderFont = const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, color: Colors.black);
   final _biggerBolderFont = const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Colors.black);
+
 
   void updateScore(String name, int value){
     _scores[name] = _scores[name] + value;
