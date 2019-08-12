@@ -10,7 +10,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Screen.keepOn(true);
     return MaterialApp(
       title: 'Bingo Score',
       theme: ThemeData(
@@ -49,9 +48,12 @@ class ScoresState extends State<Scores> {
   final _bolderFont = const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, color: Colors.black);
   final _biggerBolderFont = const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0, color: Colors.black);
 
-
   void updateScore(String name, int value){
     _scores[name] = _scores[name] + value;
+  }
+
+  void updateScreenAlwaysOn(bool value){
+    Screen.keepOn(value);
   }
 
   void updateAllScores(int value){
@@ -141,7 +143,20 @@ class ScoresState extends State<Scores> {
                 FutureBuilder<bool>(
                   future: isKeptOn, // a previously-obtained Future<String> or null
                   builder: (BuildContext context, AsyncSnapshot<bool> isOn) {
-                      return Text('Result: ${isOn.data}');
+
+                    return Row(
+                      children: [
+                        Text("Garder l'écran allumé"),
+                        Switch(
+                          value: isOn.data,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              updateScreenAlwaysOn(newValue);
+                            });
+                          }
+                        )
+                      ]
+                    );
                   },
                 )
               ]),
