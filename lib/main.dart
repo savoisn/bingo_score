@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:wakelock/wakelock.dart';
+import 'package:screen/screen.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Wakelock.enable();
+    Screen.keepOn(true);
     return MaterialApp(
       title: 'Bingo Score',
       theme: ThemeData(
@@ -127,6 +128,26 @@ class ScoresState extends State<Scores> {
     );
   }
 
+  Widget addInfoRow() {
+    Future<bool> isKeptOn = Screen.isKeptOn;
+
+    return Card(
+        child: ListTile(
+          title: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:<Widget>[
+                FutureBuilder<bool>(
+                  future: isKeptOn, // a previously-obtained Future<String> or null
+                  builder: (BuildContext context, AsyncSnapshot<bool> isOn) {
+                      return Text('Result: ${isOn.data}');
+                  },
+                )
+              ]),
+        )
+    );
+  }
 
 
   Widget _buildList(){
@@ -137,6 +158,7 @@ class ScoresState extends State<Scores> {
         addPlayerRow("mathilde"),
         addPlayerRow("nicolas"),
         addPlayerRow("anne"),
+        addInfoRow(),
     ]
     );
 
