@@ -18,6 +18,8 @@ environment:
 
 dependencies:
   screen: ^0.0.5
+  provider: ^3.0.0
+  uuid: ^2.0.2
   flutter:
     sdk: flutter
 
